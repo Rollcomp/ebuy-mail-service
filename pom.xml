@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.ebuy</groupId>
-    <artifactId>mail-service</artifactId>
+    <artifactId>ebuy-mail-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>mail-service</name>
+    <name>ebuy-mail-service</name>
     <description>Mail Service for ebuy project</description>
 
     <properties>
@@ -38,6 +38,11 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+            <version>2.4.6.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
             <version>2.4.6.RELEASE</version>
         </dependency>
         <dependency>
