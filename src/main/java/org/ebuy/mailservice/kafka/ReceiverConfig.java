@@ -1,9 +1,12 @@
 package org.ebuy.mailservice.kafka;
 
+import com.netflix.discovery.converters.Auto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.ebuy.mailservice.dto.ReceiveMailDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -28,6 +31,9 @@ public class ReceiverConfig {
     @Value("${spring.kafka.consumer.group-id}")
     private String consumerGroupId;
 
+    @Autowired
+    private KafkaProperties kafkaProperties;
+
     @Bean
     public ConsumerFactory<String, ReceiveMailDto> consumerFactory() {
         final JsonDeserializer<ReceiveMailDto> jsonDeserializer = new JsonDeserializer<>(ReceiveMailDto.class);
@@ -41,7 +47,9 @@ public class ReceiverConfig {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, jsonDeserializer);
-
+        if(kafkaProperties.getProperties() != null){
+            props.putAll(kafkaProperties.getProperties());
+        }
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
                 jsonDeserializer);
     }

@@ -13,8 +13,7 @@ spring:
       userRegistered: xha6ilg6-useregister
       userPassword: xha6ilg6-userpassword
     properties:
-      security:
-        protocol: SASL_SSL
+      security.protocol: SASL_SSL
       sasl:
         mechanism: SCRAM-SHA-256
         jaas:
