@@ -1,19 +1,19 @@
-package org.ebuy.mailservice.dto;
+package org.ebuy.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by Ozgur Ustun on May, 2020
  */
-public class ReceiveMailDto {
+public class TokenMail {
 
     private String email;
     private String token;
 
-    public ReceiveMailDto() {
+    public TokenMail() {
     }
 
-    public ReceiveMailDto(String email, String token) {
+    public TokenMail(String email, String token) {
         this.email = email;
         this.token = token;
     }
