@@ -1,6 +1,6 @@
-package org.ebuy.mailservice.service;
+package org.ebuy.service;
 
-import org.ebuy.mailservice.dto.ReceiveMailDto;
+import org.ebuy.model.TokenMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,17 +13,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-    @Autowired
-    public JavaMailSender emailSender;
+    public final JavaMailSender emailSender;
 
-    public void sendRegisterMail(ReceiveMailDto receiveMailDto) {
+    @Autowired
+    public EmailService(JavaMailSender emailSender) {
+        this.emailSender = emailSender;
+    }
+
+    public void sendRegisterMail(TokenMail receiveMailDto) {
         String subject = "Please verify your email address...";
         String message = "To confirm registration, please click the link: " + " http://localhost:8080/registerservice/api/registrationConfirm?t=" + receiveMailDto.getToken();
         SimpleMailMessage email = generateMailMessage(receiveMailDto.getEmail(), subject, message);
         emailSender.send(email);
     }
 
-    public void sendPasswordResetMail(ReceiveMailDto mailDto) {
+    public void sendPasswordResetMail(TokenMail mailDto) {
         String subject = "Please reset your password...";
         String message = "To reset your password, please click the link: " + " http://localhost:8080/registerservice/api/resetPassword?t=" + mailDto.getToken();
         SimpleMailMessage email = generateMailMessage(mailDto.getEmail(), subject, message);

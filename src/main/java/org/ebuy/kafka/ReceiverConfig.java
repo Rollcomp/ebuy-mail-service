@@ -1,9 +1,8 @@
-package org.ebuy.mailservice.kafka;
+package org.ebuy.kafka;
 
-import com.netflix.discovery.converters.Auto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.ebuy.mailservice.dto.ReceiveMailDto;
+import org.ebuy.model.TokenMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
@@ -35,8 +34,8 @@ public class ReceiverConfig {
     private KafkaProperties kafkaProperties;
 
     @Bean
-    public ConsumerFactory<String, ReceiveMailDto> consumerFactory() {
-        final JsonDeserializer<ReceiveMailDto> jsonDeserializer = new JsonDeserializer<>(ReceiveMailDto.class);
+    public ConsumerFactory<String, TokenMail> consumerFactory() {
+        final JsonDeserializer<TokenMail> jsonDeserializer = new JsonDeserializer<>(TokenMail.class);
         jsonDeserializer.setRemoveTypeHeaders(false);
         jsonDeserializer.addTrustedPackages("*");
         jsonDeserializer.setUseTypeHeaders(false);
@@ -55,8 +54,8 @@ public class ReceiverConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, ReceiveMailDto> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, ReceiveMailDto> factory =
+    public ConcurrentKafkaListenerContainerFactory<String, TokenMail> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, TokenMail> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
 
